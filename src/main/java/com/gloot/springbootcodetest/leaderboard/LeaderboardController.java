@@ -5,9 +5,7 @@ import static com.gloot.springbootcodetest.Application.API_VERSION_1;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(API_VERSION_1 + "/leaderboard")
@@ -16,7 +14,45 @@ public class LeaderboardController {
   private final LeaderboardService service;
 
   @GetMapping
-  public List<LeaderboardEntryDto> getLeaderboard() {
-    return service.getListOfAllLeaderboardEntriesAsDTO();
+  public List<LeaderboardEntryEntity> getLeaderboard()
+  {
+
+    return service.getTopFiveList();
+   //return service.getListOfAllLeaderboardEntriesAsDTO();
   }
+
+  @PostMapping("/createUser/{username}/{country}")
+  public String createUser(@PathVariable String username,@PathVariable String country)
+  {
+    return service.createUser(username,country);
+  }
+
+  @GetMapping("/alluser")
+    public List<LeaderboardEntryDto> getAllUsers(){
+
+      return service.getListOfAllLeaderboardEntriesAsDTO();
+    }
+
+  @GetMapping("/user/{username}")
+  public int getPositionOfUser(@PathVariable String username)
+  {
+    return service.getPositionOfUserSpecificLeaderboard(username);
+  }
+
+  @PostMapping("/userscore/{username}/{score}")
+    public String saveUserScore(@PathVariable String username,@PathVariable int score){
+    return service.saveUserScore(username,score);
+    }
+
+    @GetMapping("/{country}")
+  public List<LeaderboardEntryEntity> topUsaUserScore(@PathVariable String country) throws Exception {
+    return service.getListOfAllLeaderboardUSA(country);
+    }
+
+    @PostMapping("/delete/{userid}")
+  public String deleteUser(@PathVariable String userid){
+    return service.deleteUser(userid);
+    }
+
+
 }

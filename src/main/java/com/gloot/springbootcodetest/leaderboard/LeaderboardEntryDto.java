@@ -9,4 +9,5 @@ public class LeaderboardEntryDto {
   int position;
   String nick;
   int score;
+  String country;
 }

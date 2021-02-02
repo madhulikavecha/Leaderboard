@@ -7,6 +7,7 @@ public class LeaderboardEntryMapper {
         .position(entity.getPos())
         .nick(entity.getNick())
         .score(entity.getScore())
+         .country(entity.getCountry())
         .build();
   }
 }
