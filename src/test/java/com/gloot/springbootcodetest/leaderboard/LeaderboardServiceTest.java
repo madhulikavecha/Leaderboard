@@ -15,8 +15,8 @@ public class LeaderboardServiceTest extends SpringBootComponentTest {
   @Test
   void getLeaderboard() {
     List<LeaderboardEntryEntity> entities = List
-        .of(new LeaderboardEntryEntity(1, "g-looter-1", 100,"USA"),
-            new LeaderboardEntryEntity(2, "g-looter-2", 90,"USA"));
+        .of(new LeaderboardEntryEntity(1,"g-looter", "g-looter-1", 100,"USA"),
+            new LeaderboardEntryEntity(2, "g-looter2","g-looter-2", 90,"USA"));
     repository.saveAll(entities);
 
     List<LeaderboardEntryDto> leaderboard = service

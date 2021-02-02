@@ -33,10 +33,9 @@ public class LeaderboardController {
       return service.getListOfAllLeaderboardEntriesAsDTO();
     }
 
-  @GetMapping("/user/{username}")
-  public int getPositionOfUser(@PathVariable String username)
-  {
-    return service.getPositionOfUserSpecificLeaderboard(username);
+  @GetMapping("/position/{username}/{country}")
+  public String getPositionOfUser(@PathVariable String username,@PathVariable String country) throws Exception {
+    return service.getPositionOfUserSpecificLeaderboard(username,country);
   }
 
   @PostMapping("/userscore/{username}/{score}")
@@ -46,11 +45,12 @@ public class LeaderboardController {
 
     @GetMapping("/{country}")
   public List<LeaderboardEntryEntity> topUsaUserScore(@PathVariable String country) throws Exception {
-    return service.getListOfAllLeaderboardUSA(country);
+    return service.getListOfAllUsersByCountry(country);
     }
 
     @PostMapping("/delete/{userid}")
-  public String deleteUser(@PathVariable String userid){
+  public String deleteUser(@PathVariable String userid) throws LeaderboardException {
+
     return service.deleteUser(userid);
     }
 

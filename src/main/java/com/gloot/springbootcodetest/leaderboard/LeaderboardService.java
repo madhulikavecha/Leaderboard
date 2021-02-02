@@ -2,11 +2,9 @@ package com.gloot.springbootcodetest.leaderboard;
 
 import static com.gloot.springbootcodetest.leaderboard.LeaderboardEntryMapper.mapToDto;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -50,31 +48,53 @@ public class LeaderboardService {
       return "username / country must have atleast 2 characters";
     }
     String userID = username.substring(0,2)+country.substring(0,2)+(allEntriesAsEntities.length+1);
-    LeaderboardEntryEntity newUser = new LeaderboardEntryEntity(userID,country);
+    LeaderboardEntryEntity newUser = new LeaderboardEntryEntity(username,country);
+    newUser.setNick(userID);
     repository.save(newUser);
-    return "New User is saved with userName"+userID;
+    return "New User is saved with userName,userId - "+username+userID;
 
   }
 
-  public int getPositionOfUserSpecificLeaderboard(String username) {
-    LeaderboardEntryEntity userDetails = repository.findByNick(username);
-    return userDetails.getPos();
+  public String getPositionOfUserSpecificLeaderboard(String username,String country) throws Exception {
+    List<LeaderboardEntryEntity> user = repository.findByUsername(username);
+    LeaderboardEntryEntity userWithUserId = repository.findByNick(username);
+    List<LeaderboardEntryEntity> sortedList  = getListOfAllUsersByCountry(country);
+    if(checkMultipleAccountsForUser(username) == "None"){
+      if(user.size()==1){
+        Optional<LeaderboardEntryEntity> entryEntity = sortedList.stream().filter(i->i.getUsername()==user.get(0).getUsername()).findAny();
+        return "The position of user ( "+username+ " ) in " +country+" leaderboard is   " +entryEntity.get().getPos().toString();
+      }
+      else {
+        Optional<LeaderboardEntryEntity> entryEntity = sortedList.stream().filter(i->i.getUsername()==userWithUserId.getUsername()).findAny();
+        return "The position of user ( "+username+ " ) in " +country+" leaderboard is   " +entryEntity.get().getPos().toString();
+      }
+    }return checkMultipleAccountsForUser(username);
+
+
   }
 
   public String saveUserScore(String username, int score) {
-    LeaderboardEntryEntity[] allEntriesAsEntities = repository.findAll().toArray(new LeaderboardEntryEntity[]{});
-    LeaderboardEntryEntity userDetails = repository.findByNick(username);
-    if(userDetails==null){
-      return "Please check your username or create new user --   http://localhost:8080/api/v1/leaderboard/createUser/username/country ";
-    }else{
-      userDetails.setScore(userDetails.getScore()+score);
-      repository.save(userDetails);
-      return "User Score is updated User , Score :"+username+","+userDetails.getScore();
-    }
+    List<LeaderboardEntryEntity> user = repository.findByUsername(username);
+    LeaderboardEntryEntity userWithUserId = repository.findLeaderboardEntryEntityByNick(username);
+    if(checkMultipleAccountsForUser(username) == "None"){
+      if(user.size()==1){
+        int newscore=user.get(0).getScore()+score;
+        user.get(0).setScore(newscore);
+        repository.save(user.get(0));
+        return "User Score is updated User , Score :"+username+","+ newscore ;
+      }
+      else{
+        int newscore=userWithUserId.getScore()+score;
+        userWithUserId.setScore(newscore);
+        repository.save(userWithUserId);
+        return "User Score is updated User , Score :"+username +" ,"+newscore;
+      }
+    }return checkMultipleAccountsForUser(username);
+
   }
 
 
-  public List<LeaderboardEntryEntity> getListOfAllLeaderboardUSA(String country) throws Exception {
+  public List<LeaderboardEntryEntity> getListOfAllUsersByCountry(String country) throws Exception {
     List<LeaderboardEntryEntity> entityListsortedByCountry = repository.findAllByCountry(country,Sort.by(Sort.Direction.DESC,"score"));
     if(entityListsortedByCountry == null){
      // List<String> countryList = repository.findDistinctCountry();
@@ -97,12 +117,33 @@ public class LeaderboardService {
     return entryEntityList;
   }
 
-  public String deleteUser(String userid) {
-    LeaderboardEntryEntity user = repository.findLeaderboardEntryEntityByNick(userid);
-    if(user== null){
-      return "Please provide valid userID / Userid provided is not found" + userid;
+  private String checkMultipleAccountsForUser(String username){
+    List<LeaderboardEntryEntity> user = repository.findByUsername(username);
+    LeaderboardEntryEntity userWithUserId = repository.findLeaderboardEntryEntityByNick(username);
+    if(user== null && userWithUserId== null){
+      return "Please provide valid userID / Userid provided is not found" + username;
     }
-    repository.delete(user);
-    return "Sucessfully deleted User - "+ userid ;
+    else if(user.size()>1){
+      return "There are several accounts created with this username please provide unique userId  ";
+    }
+
+    return "None";
+
+  }
+
+  public String deleteUser(String username) throws LeaderboardException {
+    List<LeaderboardEntryEntity> user = repository.findByUsername(username);
+    LeaderboardEntryEntity userWithUserId = repository.findLeaderboardEntryEntityByNick(username);
+    if(checkMultipleAccountsForUser(username) == "None"){
+      if(user.size()==1){
+        repository.delete(user.get(0));
+        return "Sucessfully deleted User - "+ username ;
+      }
+      else {
+        repository.delete(userWithUserId);
+        return "Sucessfully deleted User - "+ username ;
+      }
+    } return checkMultipleAccountsForUser(username);
+
   }
 }

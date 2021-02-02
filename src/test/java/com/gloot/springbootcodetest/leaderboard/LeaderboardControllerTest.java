@@ -19,7 +19,7 @@ public class LeaderboardControllerTest extends SpringBootComponentTest {
 
   @Test
   void getLeaderboardTest() throws Exception {
-    LeaderboardEntryEntity entity = new LeaderboardEntryEntity(1, "g-looter", 100,"USA");
+    LeaderboardEntryEntity entity = new LeaderboardEntryEntity(1,"g-looter", "g-looter", 100,"USA");
     repository.saveAll(List.of(entity));
 
     mockMvc.perform(get("/api/v1/leaderboard"))

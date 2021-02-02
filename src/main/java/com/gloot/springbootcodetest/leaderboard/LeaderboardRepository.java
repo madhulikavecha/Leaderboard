@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface LeaderboardRepository extends JpaRepository<LeaderboardEntryEntity, Integer> {
     LeaderboardEntryEntity findByNick(String nick);
-
+   List<LeaderboardEntryEntity> findByUsername(String username);
     List<LeaderboardEntryEntity> findAllByCountry (String country, Sort sort);
     List<LeaderboardEntryEntity> findAll (Sort sort);
     LeaderboardEntryEntity findLeaderboardEntryEntityByNick(String nick);

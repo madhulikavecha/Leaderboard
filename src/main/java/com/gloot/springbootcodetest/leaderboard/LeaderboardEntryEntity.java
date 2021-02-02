@@ -20,13 +20,14 @@ public class LeaderboardEntryEntity {
   private Integer pos =0;
   @Id
   private String nick;
+  private String username;
   private Integer score;
   private String country;
 
 
   public LeaderboardEntryEntity(String username,String country) {
-    nick=username;
-    this.score=0;
+    this.username=username;
     this.country=country;
+    this.score=0;
   }
 }
