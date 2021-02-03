@@ -34,18 +34,6 @@ public class LeaderboardControllerTest extends SpringBootComponentTest {
   }
 
   @Test
-  void createUserTest() throws Exception {
-    LeaderboardEntryEntity entity = new LeaderboardEntryEntity(1,"glUS1", "glooter", 0,"USA");
-    repository.saveAll(List.of(entity));
-    mockMvc.perform(post("/api/v1/leaderboard/createuser/{glooter}/{USA}"))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.[0].nick", is(entity.getNick())))
-            .andExpect(jsonPath("$.[0].username", is(entity.getUsername())))
-            .andExpect(jsonPath("$.[0].score", is(entity.getScore())))
-            .andExpect(jsonPath("$.[0].country", is(entity.getCountry())));
-  }
-
-  @Test
   void getLeaderboardByCountryTest() throws Exception {
     List<LeaderboardEntryEntity> entities = List
             .of(new LeaderboardEntryEntity(1, "g-looter", "g-looter-1", 100, "USA"),

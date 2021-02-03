@@ -5,6 +5,7 @@ import static com.gloot.springbootcodetest.Application.API_VERSION_1;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -49,9 +50,12 @@ public class LeaderboardController {
     }
 
     @PostMapping("/delete/{userid}")
-  public String deleteUser(@PathVariable String userid) throws LeaderboardException {
-
-    return service.deleteUser(userid);
+  public String deleteUser(@PathVariable String userid,LeaderboardException e) throws LeaderboardException {
+   try{
+     return service.deleteUser(userid);
+   } catch (LeaderboardException leaderboardException) {
+     throw new LeaderboardException(leaderboardException.getMessage());
+   }
     }
 
 

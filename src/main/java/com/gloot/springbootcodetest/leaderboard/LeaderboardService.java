@@ -3,8 +3,6 @@ package com.gloot.springbootcodetest.leaderboard;
 import static com.gloot.springbootcodetest.leaderboard.LeaderboardEntryMapper.mapToDto;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -47,11 +45,12 @@ public class LeaderboardService {
     if(username.length()<2 || country.length()<2){
       return "username / country must have atleast 2 characters";
     }
-    String userID = username.substring(0,2)+country.substring(0,2)+(allEntriesAsEntities.length+1);
+    Random random = new Random();
+    String userID = username.substring(0,3)+country.substring(0,2)+random.nextInt(99999);
     LeaderboardEntryEntity newUser = new LeaderboardEntryEntity(username,country);
     newUser.setNick(userID);
     repository.save(newUser);
-    return "New User is saved with userName,userId - "+username+userID;
+    return "New User is saved with userName,userId - "+username+","+userID;
 
   }
 
@@ -61,10 +60,12 @@ public class LeaderboardService {
     List<LeaderboardEntryEntity> sortedList  = getListOfAllUsersByCountry(country);
     if(checkMultipleAccountsForUser(username) == "None"){
       if(user.size()==1){
-        Optional<LeaderboardEntryEntity> entryEntity = sortedList.stream().filter(i->i.getUsername()==user.get(0).getUsername()).findAny();
+       // return user.get(0).getPos().toString();
+       Optional<LeaderboardEntryEntity> entryEntity = sortedList.stream().filter(i->i.getUsername()==user.get(0).getUsername()).findAny();
         return "The position of user ( "+username+ " ) in " +country+" leaderboard is   " +entryEntity.get().getPos().toString();
       }
       else {
+       // return userWithUserId.getPos().toString();
         Optional<LeaderboardEntryEntity> entryEntity = sortedList.stream().filter(i->i.getUsername()==userWithUserId.getUsername()).findAny();
         return "The position of user ( "+username+ " ) in " +country+" leaderboard is   " +entryEntity.get().getPos().toString();
       }
@@ -134,16 +135,16 @@ public class LeaderboardService {
   public String deleteUser(String username) throws LeaderboardException {
     List<LeaderboardEntryEntity> user = repository.findByUsername(username);
     LeaderboardEntryEntity userWithUserId = repository.findLeaderboardEntryEntityByNick(username);
-    if(checkMultipleAccountsForUser(username) == "None"){
-      if(user.size()==1){
+    if(checkMultipleAccountsForUser(username) == "None") {
+      if (user.size() == 1) {
         repository.delete(user.get(0));
-        return "Sucessfully deleted User - "+ username ;
-      }
-      else {
+        return "Sucessfully deleted User - " + username;
+      } else {
         repository.delete(userWithUserId);
-        return "Sucessfully deleted User - "+ username ;
+        return "Sucessfully deleted User - " + username;
       }
-    } return checkMultipleAccountsForUser(username);
+    }return checkMultipleAccountsForUser(username);
+
 
   }
 }
