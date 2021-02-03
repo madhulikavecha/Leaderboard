@@ -17,7 +17,7 @@ import org.hibernate.annotations.GeneratorType;
 public class LeaderboardEntryEntity {
   //@Id
  // @GeneratedValue(strategy= GenerationType.IDENTITY)
-  private Integer pos =0;
+  private Integer pos ;
   @Id
   private String nick;
   private String username;
@@ -29,5 +29,6 @@ public class LeaderboardEntryEntity {
     this.username=username;
     this.country=country;
     this.score=0;
+    pos=1;
   }
 }
