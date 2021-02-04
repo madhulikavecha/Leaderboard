@@ -7,12 +7,12 @@ CREATE TABLE IF NOT EXISTS leaderboard (
 
 );
 
-INSERT INTO leaderboard (pos,username,nick, score,country) VALUES (1,'asd','xyz',9999 ,'USA');
-INSERT INTO leaderboard (pos,username,nick, score,country) VALUES (1,'johan','madhu',100 ,'USA');
-INSERT INTO leaderboard (pos,username,nick, score,country) VALUES (1,'eric','madhu2',111 ,'USA');
-INSERT INTO leaderboard (pos,username,nick, score,country) VALUES (1,'sofia','madhu3',500 ,'USA');
-INSERT INTO leaderboard (pos,username,nick, score,country) VALUES (1,'rohan','madhu5',-1 ,'USA');
+INSERT INTO leaderboard (pos,username,nick, score,country) VALUES (1,'asd','xyz',9999 ,'usa');
+INSERT INTO leaderboard (pos,username,nick, score,country) VALUES (1,'johan','madhu',100 ,'usa');
+INSERT INTO leaderboard (pos,username,nick, score,country) VALUES (1,'eric','madhu2',111 ,'usa');
+INSERT INTO leaderboard (pos,username,nick, score,country) VALUES (1,'sofia','madhu3',500 ,'usa');
+INSERT INTO leaderboard (pos,username,nick, score,country) VALUES (1,'rohan','madhu5',-1 ,'usa');
 
-INSERT INTO leaderboard (pos,username,nick, score,country) VALUES (1,'deepal','madhuEU',111 ,'EU');
-INSERT INTO leaderboard (pos,username,nick, score,country) VALUES (1,'tomas','madhEU',500 ,'EU');
-INSERT INTO leaderboard (pos,username,nick, score,country) VALUES (1,'mania','maEU4',-1 ,'EU');
+INSERT INTO leaderboard (pos,username,nick, score,country) VALUES (1,'deepal','madhuEU',111 ,'eu');
+INSERT INTO leaderboard (pos,username,nick, score,country) VALUES (1,'tomas','madhEU',500 ,'eu');
+INSERT INTO leaderboard (pos,username,nick, score,country) VALUES (1,'mania','maEU4',-1 ,'eu');

@@ -13,6 +13,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 
 public class LeaderboardControllerTest extends SpringBootComponentTest {
@@ -49,5 +50,20 @@ public class LeaderboardControllerTest extends SpringBootComponentTest {
 
   }
 
+  @Test
+  void getPositionOfUserBasedOnLeaderboardTest() throws Exception {
+    repository.deleteAll();
+    List<LeaderboardEntryEntity> entities = List
+            .of(new LeaderboardEntryEntity(1, "g-looter", "g-looterxyz", 100, "usa"),
+                    new LeaderboardEntryEntity(2,"g-looter2", "g-looter-1", 100,"usa"),
+                    new LeaderboardEntryEntity(1,"g-looter3", "g-looter-1", 100,"eu"),
+                    new LeaderboardEntryEntity(1, "g-looter4", "g-looter-2", 90, "eu"));
+    repository.saveAll(entities);
+    MvcResult position =mockMvc.perform(get("/api/v1/leaderboard/position/g-looter2/usa"))
+            .andExpect(status().isOk())
+            .andReturn();
+    assertEquals("The position of user ( g-looter2 ) in usa leaderboard is   2",position.getResponse().getContentAsString());
+
+  }
 
 }

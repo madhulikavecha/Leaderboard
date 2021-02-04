@@ -33,9 +33,6 @@ public class LeaderboardServiceTest extends SpringBootComponentTest {
     assertEquals(entity.getScore(), dto.getScore());
   }
 
-
-
-
   @Test
   void getLeaderboardByCountry() throws Exception {
     repository.deleteAll();
@@ -45,11 +42,11 @@ public class LeaderboardServiceTest extends SpringBootComponentTest {
             new LeaderboardEntryEntity(1,"g-looter3", "g-looter-1", 100,"EU"),
                     new LeaderboardEntryEntity(1, "g-looter4","g-looter-2", 90,"EU"));
     repository.saveAll(entities);
-    List<LeaderboardEntryEntity> leaderboardByCountry = service.getListOfAllUsersByCountry("EU");
+    List<LeaderboardEntryDto> leaderboardByCountry = service.getListOfAllUsersByCountry("EU");
     assertEquals(2, leaderboardByCountry.size());
 
-    assertEquals(1,leaderboardByCountry.get(0).getPos());
-    assertEquals(2,leaderboardByCountry.get(1).getPos());
+    assertEquals(1,leaderboardByCountry.get(0).getPosition());
+    assertEquals(2,leaderboardByCountry.get(1).getPosition());
 
   }
 
@@ -64,7 +61,7 @@ public class LeaderboardServiceTest extends SpringBootComponentTest {
 
 
   @Test
-  void deleteUserTest(){
+  void deleteUserTest() throws LeaderboardException {
     repository.deleteAll();
     service.createUser("usercheck","sweden");
     List<LeaderboardEntryEntity> newUserBefore = repository.findByUsername("usercheck");
@@ -77,7 +74,7 @@ public class LeaderboardServiceTest extends SpringBootComponentTest {
   }
 
   @Test
-  void updateScoreTest(){
+  void updateScoreTest() throws LeaderboardException {
     repository.deleteAll();
     service.createUser("usercheck","sweden");
     service.saveUserScore("usercheck",500);
