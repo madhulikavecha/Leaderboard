@@ -41,7 +41,7 @@ public class LeaderboardService {
      * @param allEntriesAsEntities Collection of LeaderboardEntryEntity participants
      * @return leaderboardEntryDtos list
      */
-    private List<LeaderboardEntryDto> convertToEntityDto(LeaderboardEntryEntity[] allEntriesAsEntities) {
+    public List<LeaderboardEntryDto> convertToEntityDto(LeaderboardEntryEntity[] allEntriesAsEntities) {
         LeaderboardEntryDto[] dtoObjects = new LeaderboardEntryDto[allEntriesAsEntities.length];
         for (int i = allEntriesAsEntities.length - 1; i >= 0; i--) {
             dtoObjects[i] = mapToDto(allEntriesAsEntities[i]);
@@ -101,7 +101,7 @@ public class LeaderboardService {
             throw new LeaderboardException(e.getMessage());
         }
         String msgToUser = null;
-        if (userWithUserId != null && userWithUserId.getCountry()==countryUpdated) {
+        if (userWithUserId != null && userWithUserId.getCountry().equals(countryUpdated)) {
             Optional<LeaderboardEntryDto> entryEntity = sortedList.stream().filter(i -> i.getUsername() == userWithUserId.getUsername()).findAny();
             msgToUser = "The position of user ( " + username + " ) in " + country + " leaderboard is   " + entryEntity.get().getPosition();
         } else {

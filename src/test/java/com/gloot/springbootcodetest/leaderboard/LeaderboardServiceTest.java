@@ -14,13 +14,40 @@ public class LeaderboardServiceTest extends SpringBootComponentTest {
 
   @Test
   void getLeaderboard() throws LeaderboardException {
+    repository.deleteAll();
     List<LeaderboardEntryEntity> entities = List
-        .of(new LeaderboardEntryEntity(1,"g-looter", "g-looter-1", 100,"USA"),
-            new LeaderboardEntryEntity(2, "g-looter2","g-looter-2", 90,"USA"));
+        .of(new LeaderboardEntryEntity(1,"g-looter", "g-looter-1", 100,"usa"),
+                new LeaderboardEntryEntity(1,"g-looter2", "g-looter-1", 100,"usa"),
+                new LeaderboardEntryEntity(1,"g-looter3", "g-looter-1", -1,"usa"),
+                new LeaderboardEntryEntity(1,"use1sw32e", "g-looter-1", 999,"sweden"),
+                new LeaderboardEntryEntity(1,"g-use3swe12", "g-looter-1", 100,"sweden"),
+                new LeaderboardEntryEntity(1,"us32eu234", "europeuser1", 100,"eu"),
+                new LeaderboardEntryEntity(1,"eu32eu554", "euuser2", 68294,"eu"),
+            new LeaderboardEntryEntity(2, "lr2usa2323","euuser3", 123,"usa"));
+    repository.saveAll(entities);
+
+    List<LeaderboardEntryEntity> expectedEntities = List
+            .of(new LeaderboardEntryEntity(1,"eu32eu554", "euuser2", 68294,"eu"),
+                    new LeaderboardEntryEntity(2,"use1sw32e", "g-looter-1", 999,"sweden"),
+                    new LeaderboardEntryEntity(3,"lr2usa2323", "euuser3", 123,"usa"));
+    List<LeaderboardEntryDto> actualLeaderBoardList = service
+        .getListOfTopLeaderboardEntriesAsDTO();
+    assertEquals(expectedEntities.size(), actualLeaderBoardList.size());
+    for(int i=0;i<actualLeaderBoardList.size();i++){
+      assertEqual(expectedEntities.get(i), actualLeaderBoardList.get(i));
+    }
+  }
+
+  @Test
+  void getLeaderboardAllusersTest() throws LeaderboardException {
+    repository.deleteAll();
+    List<LeaderboardEntryEntity> entities = List
+            .of(new LeaderboardEntryEntity(1,"g-loo23us23", "g-looter", 100,"USA"),
+                    new LeaderboardEntryEntity(2, "g-lo3us79","g-looter", 90,"USA"));
     repository.saveAll(entities);
 
     List<LeaderboardEntryDto> leaderboard = service
-        .getListOfTopLeaderboardEntriesAsDTO();
+            .getAllUsers();
     assertEquals(entities.size(), leaderboard.size());
     for(int i=0;i<entities.size();i++){
       assertEqual(entities.get(i), leaderboard.get(i));
@@ -37,17 +64,27 @@ public class LeaderboardServiceTest extends SpringBootComponentTest {
   void getLeaderboardByCountry() throws Exception {
     repository.deleteAll();
     List<LeaderboardEntryEntity> entities = List
-            .of(new LeaderboardEntryEntity(1,"g-looter", "g-looter-1", 100,"USA"),
-            new LeaderboardEntryEntity(1,"g-looter2", "g-looter-1", 100,"USA"),
-            new LeaderboardEntryEntity(1,"g-looter3", "g-looter-1", 100,"EU"),
-                    new LeaderboardEntryEntity(1, "g-looter4","g-looter-2", 90,"EU"));
+            .of(new LeaderboardEntryEntity(1,"g-looter", "g-looter-1", 100,"usa"),
+                    new LeaderboardEntryEntity(1,"g-looter2", "g-looter-1", 100,"usa"),
+                    new LeaderboardEntryEntity(1,"g-looter3", "g-looter-1", -1,"usa"),
+                    new LeaderboardEntryEntity(1,"use1sw32e", "g-looter-1", 999,"sweden"),
+                    new LeaderboardEntryEntity(1,"g-use3swe12", "g-looter-1", 100,"sweden"),
+                    new LeaderboardEntryEntity(1,"us32eu234", "europeuser1", 100,"eu"),
+                    new LeaderboardEntryEntity(1,"eu32eu554", "euuser2", 68294,"eu"),
+                    new LeaderboardEntryEntity(2, "lr2usa2323","euuser3", 123,"usa"));
     repository.saveAll(entities);
+
+    List<LeaderboardEntryEntity> expectedEntities = List
+            .of(new LeaderboardEntryEntity(1,"eu32eu554", "euuser2", 68294,"eu"),
+                    new LeaderboardEntryEntity(2,"us32eu234", "europeuser1", 100,"eu"));
+
     List<LeaderboardEntryDto> leaderboardByCountry = service.getListOfAllUsersByCountry("EU");
-    assertEquals(2, leaderboardByCountry.size());
+    assertEquals(expectedEntities.size(), leaderboardByCountry.size());
 
-    assertEquals(1,leaderboardByCountry.get(0).getPosition());
-    assertEquals(2,leaderboardByCountry.get(1).getPosition());
-
+    assertEquals(expectedEntities.size(), leaderboardByCountry.size());
+    for(int i=0;i<leaderboardByCountry.size();i++){
+      assertEqual(expectedEntities.get(i), leaderboardByCountry.get(i));
+    }
   }
 /*
   @Test
