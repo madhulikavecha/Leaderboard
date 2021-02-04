@@ -25,9 +25,14 @@ public class LeaderboardController {
      * @Pathvariable country specified by the user
      */
     @GetMapping
-    public List<LeaderboardEntryDto> getLeaderboard() {
+    public ResponseEntity<List<LeaderboardEntryDto>> getLeaderboard() {
+        try{
+            return (ResponseEntity<List<LeaderboardEntryDto>>) new ResponseEntity(service.getListOfTopLeaderboardEntriesAsDTO(),HttpStatus.OK);
 
-        return service.getListOfTopLeaderboardEntriesAsDTO();
+        }catch (LeaderboardException e){
+            return  new ResponseEntity(e.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND);
+        }
+
     }
 
     /**
@@ -54,8 +59,14 @@ public class LeaderboardController {
      * @return all the users in leaderboard.
      */
     @GetMapping("/allusers")
-    public List<LeaderboardEntryDto> getAllUsers() {
-        return service.getAllUsers();
+    public ResponseEntity<List<LeaderboardEntryDto>> getAllUsers() {
+        try{
+            return (ResponseEntity<List<LeaderboardEntryDto>>) new ResponseEntity(service.getAllUsers(),HttpStatus.OK);
+
+        }catch (LeaderboardException e){
+            return  new ResponseEntity(e.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND);
+        }
+
     }
 
     /**
