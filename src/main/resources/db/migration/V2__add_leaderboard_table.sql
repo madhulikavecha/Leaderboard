@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS leaderboard (
 
 );
 
-INSERT INTO leaderboard (pos,username,nick, score,country) VALUES (1,'asd','xyz',9999 ,'usa');
+INSERT INTO leaderboard (pos,username,nick, score,country) VALUES (1,'asd','glooter',9999 ,'usa');
 INSERT INTO leaderboard (pos,username,nick, score,country) VALUES (1,'johan','madhu',100 ,'usa');
 INSERT INTO leaderboard (pos,username,nick, score,country) VALUES (1,'eric','madhu2',111 ,'usa');
 INSERT INTO leaderboard (pos,username,nick, score,country) VALUES (1,'sofia','madhu3',500 ,'usa');

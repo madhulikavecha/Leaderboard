@@ -1,6 +1,10 @@
-package com.gloot.springbootcodetest.leaderboard;
+package com.gloot.springbootcodetest.leaderboard.controller;
 
 
+import com.gloot.springbootcodetest.leaderboard.dto.LeaderboardEntryDto;
+import com.gloot.springbootcodetest.leaderboard.model.LeaderboardEntryEntity;
+import com.gloot.springbootcodetest.leaderboard.exception.LeaderboardException;
+import com.gloot.springbootcodetest.leaderboard.service.LeaderboardService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,9 +24,7 @@ public class LeaderboardController {
     /**
      * HTTP Request handler at the api/v1/leaderboard endpoint.
      *
-     * @return Top list<User> of Top 1 user score from each country
-     * @Pathvariable username specified by the user
-     * @Pathvariable country specified by the user
+     * @return Top top score user from each country in list <LeaderboardEntryDto>
      */
     @GetMapping
     public ResponseEntity<List<LeaderboardEntryDto>> getLeaderboard() {
@@ -36,9 +38,9 @@ public class LeaderboardController {
     }
 
     /**
-     * HTTP Request handler at the /createUser/{username}/{country} endpoint. Only accepts POST requests
+     * HTTP Request handler at the /createUser endpoint. Only accepts POST requests
      *
-     * @return success message. A new user is created and uniquie Nick is also generated.
+     * @return success message if user is created. A new user is created and unique Nick is also generated..
      * @Pathvariable username specified by the user
      * @Pathvariable country specified by the user
      */
@@ -54,9 +56,9 @@ public class LeaderboardController {
     }
 
     /**
-     * HTTP Request handler at the /allusers endpoint. Only accepts POST requests
+     * HTTP Request handler at the /allusers endpoint
      *
-     * @return all the users in leaderboard.
+     * @return all the users in leaderboard in json.
      */
     @GetMapping("/allusers")
     public ResponseEntity<List<LeaderboardEntryDto>> getAllUsers() {
@@ -69,11 +71,12 @@ public class LeaderboardController {
 
     }
 
+
     /**
      * HTTP Request handler at the /position/{username}/{country} endpoint.
      *
-     * @return position of user specified to country.
-     * @Pathvariable username specified by the user
+     * @return position of specific user specified to country.
+     * @Pathvariable username or nick can be specified by the user
      * @Pathvariable country specified by the user
      */
     @GetMapping("/position/{username}/{country}")
@@ -85,11 +88,12 @@ public class LeaderboardController {
         }
       }
 
+
     /**
-     * HTTP Request handler at the /userscore/{username}/{country} endpoint.
+     * HTTP Request handler at the /userscore endpoint.Only accepts POST requests
      *
-     * @return Updates the score of user.
-     * @Pathvariable username specified by the user
+     * @return success message with new score  of user.
+     * @Pathvariable username or nick can be specified by the user
      * @Pathvariable country specified by the user
      */
     @PostMapping("/updatescore")
@@ -102,10 +106,11 @@ public class LeaderboardController {
         }
      }
 
+
     /**
      * HTTP Request handler at the /{country} endpoint.
      *
-     * @return sorted List of user based on score  from country specified.
+     ** @return sorted List of user based on score  from country specified.
      * @Pathvariable country specified by the user
      */
     @GetMapping("/{country}")
@@ -118,10 +123,10 @@ public class LeaderboardController {
     }
 
     /**
-     * HTTP Request handler at the /delete/{username} endpoint.
+     * HTTP Request handler at the /delete endpoint.Only accepts POST requests.
      *
-     * @return deletes the user from datanase and returns success msg
-     * @Pathvariable username specified by the user
+     * @return deletes the user and returns success msg if user provide valid username or nick
+     * @Pathvariable username or nick can  be  specified by the user
      */
     @PostMapping("/delete")
     public ResponseEntity deleteUser(@RequestBody LeaderboardEntryEntity entity){

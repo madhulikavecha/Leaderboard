@@ -1,5 +1,6 @@
-package com.gloot.springbootcodetest.leaderboard;
+package com.gloot.springbootcodetest.leaderboard.repository;
 
+import com.gloot.springbootcodetest.leaderboard.model.LeaderboardEntryEntity;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

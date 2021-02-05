@@ -1,4 +1,4 @@
-package com.gloot.springbootcodetest.leaderboard;
+package com.gloot.springbootcodetest.leaderboard.model;
 
 import javax.persistence.*;
 
