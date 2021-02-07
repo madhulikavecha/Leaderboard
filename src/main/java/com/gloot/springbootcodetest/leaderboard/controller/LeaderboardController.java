@@ -24,7 +24,7 @@ public class LeaderboardController {
     /**
      * HTTP Request handler at the api/v1/leaderboard endpoint.
      *
-     * @return Top top score user from each country in list <LeaderboardEntryDto>
+     * @return list of users having the top score from each country <LeaderboardEntryDto>
      */
     @GetMapping
     public ResponseEntity<List<LeaderboardEntryDto>> getLeaderboard() {
@@ -40,7 +40,7 @@ public class LeaderboardController {
     /**
      * HTTP Request handler at the /createUser endpoint. Only accepts POST requests
      *
-     * @return success message if user is created. A new user is created and unique Nick is also generated..
+     * @return success message if user is created. A new user is created and unique Nick is generated..
      */
     @PostMapping("/createuser")
     public ResponseEntity createUser(@RequestBody LeaderboardEntryEntity entity) throws LeaderboardException {
@@ -56,7 +56,7 @@ public class LeaderboardController {
     /**
      * HTTP Request handler at the /allusers endpoint
      *
-     * @return all the users in leaderboard in json.
+     * @return all users in leaderboard in json.
      */
     @GetMapping("/allusers")
     public ResponseEntity<List<LeaderboardEntryDto>> getAllUsers() {
@@ -88,7 +88,7 @@ public class LeaderboardController {
     /**
      * HTTP Request handler at the /userscore endpoint.Only accepts POST requests
      *
-     * @return success message with new score  of user.
+     * @return success message with updated score of the user.
      */
     @PostMapping("/updatescore")
     public ResponseEntity updateScore(@RequestBody LeaderboardEntryEntity entity) {
@@ -103,10 +103,8 @@ public class LeaderboardController {
 
     /**
      * HTTP Request handler at the /country/{country} endpoint.
-     * <p>
-     * * @return sorted List of user based on score  from country specified.
      *
-     * @Pathvariable country specified by the user
+     * @return sorted List of user based on score  from country specified.
      */
     @GetMapping("/country/{country}")
     public ResponseEntity<List<LeaderboardEntryDto>> topUserScoreByCountry(@PathVariable String country) {
@@ -121,7 +119,6 @@ public class LeaderboardController {
      * HTTP Request handler at the /delete endpoint.Only accepts POST requests.
      *
      * @return deletes the user and returns success msg if user provide valid username or nick
-     * @Pathvariable username or nick can  be  specified by the user
      */
     @PostMapping("/delete")
     public ResponseEntity deleteUser(@RequestBody LeaderboardEntryEntity entity) {

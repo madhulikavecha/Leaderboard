@@ -89,7 +89,7 @@ public class LeaderboardControllerTest extends SpringBootComponentTest {
     }
 
     /**
-     * test to create new user (LeaderboardEntryEntity)   from country specified ,username or nick specified  - "/api/v1/leaderboard/createuser"
+     * test to create new user (LeaderboardEntryEntity)  from country specified ,username or nick specified  - "/api/v1/leaderboard/createuser"
      *
      * @throws Exception
      */
@@ -135,7 +135,7 @@ public class LeaderboardControllerTest extends SpringBootComponentTest {
 
 
     /**
-     * test to delete user (LeaderboardEntryEntity)   username or nick specified  - "/api/v1/leaderboard/delete"
+     * test to delete user (LeaderboardEntryEntity)  username or nick specified  - "/api/v1/leaderboard/delete"
      *
      * @throws Exception
      */
@@ -157,7 +157,7 @@ public class LeaderboardControllerTest extends SpringBootComponentTest {
     }
 
     @Test
-    void invalidUrl_returnsHttp404() throws Exception {
+    void invalidUrl_returnsInternalServeError() throws Exception {
         LeaderboardEntryEntity entity = new LeaderboardEntryEntity(1, "glo4us234", "username1", 100, "usa");
         repository.saveAll(List.of(entity));
         String username = "username1";

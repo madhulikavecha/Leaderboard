@@ -38,17 +38,22 @@ Alternatives:
 Including a commit history is a plus which would showcase your thought process
 
 ## solution
-This is an example leaderboard application providing RESt API to create user and update score. Leaderboard will return top 1 user with highest score from each country.
+Here is the leaderboard application providing REST API to create users and update the scores.
+Leaderboard will return the top user with the highest score from each country.
+
 ##Install :
 mvn clean
 mvn install
+
 ## Run the app:
 curl -X GET http://localhost:8080/api/v1/leaderboard
-## Run the test : mvn -q test
+
+## Run the test : 
+mvn -q test
 
 ###Get leaderboard - List of top users from each country
 curl -i  http://localhost:8080/api/v1/leaderboard
-###Resonse
+###Response
 HTTP/1.1 200
 Content-Type: application/json
 Transfer-Encoding: chunked
@@ -60,7 +65,7 @@ Date: Sun, 07 Feb 2021 19:15:42 GMT
 
 ### Get leaderboard from all countries
 curl -i  http://localhost:8080/api/v1/leaderboard/sweden
-###Resonse
+###Response
 HTTP/1.1 200
 Content-Type: application/json
 Transfer-Encoding: chunked
@@ -70,9 +75,9 @@ Date: Sun, 07 Feb 2021 19:15:42 GMT
 {"position":2,"nick":"myu9sw32432","username":"myusername1","score":0,"country":"sweden"},
 {"position":3,"nick":"myu10sw88068","username":"myusername1","score":0,"country":"sweden"}]
 
-### If there are  no users in specified  country 
+### Here is the response when there are no users in the specified  country 
 curl -i  http://localhost:8080/api/v1/leaderboard/country/africa
-##Reponse
+##Response
 HTTP/1.1 404
 Content-Type: text/plain;charset=UTF-8
 Content-Length: 51
@@ -80,9 +85,9 @@ Date: Sun, 07 Feb 2021 19:19:49 GMT
 
 please select valid country among [eu, sweden, usa]
 
-### Get all users from all countries
+### Get users from all the countries
 curl -i  http://localhost:8080/api/v1/leaderboard/allusers
-##Reponse
+##Response
 HTTP/1.1 200
 Content-Type: application/json
 Transfer-Encoding: chunked
@@ -113,7 +118,7 @@ Content-Length: 112
 
 User Score is updated User , Score :  tomas ,1000
 
-###Update user with multiple accounts for same user
+###Update user profiles with multiple accounts having the same username
 curl -i -d "{"""username""":"""myusername1""","""score""":"""1000"""}" -H "Content-Type:application/json"  http://localhost:8080/api/v1/leaderboard/updatescore
 ###Response
 HTTP/1.1 404
@@ -143,7 +148,7 @@ Date: Sun, 07 Feb 2021 19:10:43 GMT
 The user tomas  has been deleted
 
 
-##Delete user with multiple accounts for same user
+###Delete user profiles with multiple accounts having the same username
 curl -i -d "{"""username""":"""myusername1"""}" -H "Content-Type:application/json"  http://localhost:8080/api/v1/leaderboad/delete
 ###Response
 HTTP/1.1 404
@@ -161,7 +166,7 @@ Content-Length: 112
 
 The user myu11sw4279  has been deleted
 
-### Get postion of user based on country
+### Get position of user based on country
 curl -i  http://localhost:8080/api/v1/leaderboard/position/eric/usa
 ###Response
 HTTP/1.1 200
@@ -171,7 +176,7 @@ Date: Sun, 07 Feb 2021 19:24:34 GMT
 
 The position of user ( eric ) in usa leaderboard is   3
 
-### If user is not available in specified country
+### Following is the case when the user is not available in specified country
 curl -i  http://localhost:8080/api/v1/leaderboard/position/username1/usa
 ###Response
 HTTP/1.1 404
@@ -179,10 +184,11 @@ Content-Type: text/plain;charset=UTF-8
 Content-Length: 100
 Date: Sun, 07 Feb 2021 19:26:02 GMT
 
-Please provide valid  username .'username1'  is not found in our records. please provide valid input
+Please provide the valid username. 'username1'  is not found in our records.
 
-### multiple accounts for same user
-curl -i   http://localhost:8080/api/v1/leaderboard/position/johan/usa
+###Get position of the user profile with multiple accounts having the same username
+curl -i http://localhost:8080/api/v1/leaderboard/position/johan/usa
+###Response
 HTTP/1.1 404
 Content-Type: text/plain;charset=UTF-8
 Content-Length: 106
@@ -190,14 +196,11 @@ Date: Sun, 07 Feb 2021 19:29:52 GMT
 
 There are several accounts created with this username. Please provide a unique userId for username - johan
 ####NEED TO PROVIDE NICK IN THIS CASE
-http://localhost:8080/api/v1/leaderboard/position/joh10us37531/usa
+curl -i http://localhost:8080/api/v1/leaderboard/position/joh10us37531/usa
 ###Response
 HTTP/1.1 200
 Content-Type: text/plain;charset=UTF-8
 Content-Length: 63
 Date: Sun, 07 Feb 2021 19:31:25 GMT
 
-The position of user ( joh10us37531 ) in usa leaderboard is   4
-
-
-
+The position of user ( joh10us37531 ) in usa leaderboard is 4
