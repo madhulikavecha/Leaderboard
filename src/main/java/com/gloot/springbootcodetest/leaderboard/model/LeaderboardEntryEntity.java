@@ -19,9 +19,9 @@ public class LeaderboardEntryEntity {
     //@Id
     // @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer pos;
+    private String username;
     @Id
     private String nick;
-    private String username;
     private Integer score;
     private String country;
 

@@ -40,6 +40,7 @@ Including a commit history is a plus which would showcase your thought process
 ## solution
 Here is the leaderboard application providing REST API to create users and update the scores.
 Leaderboard will return the top user with the highest score from each country.
+By default some users are added into database.
 
 ##Install :
 mvn clean
@@ -51,9 +52,9 @@ curl -X GET http://localhost:8080/api/v1/leaderboard
 ## Run the test : 
 mvn -q test
 
-###Get leaderboard - List of top users from each country
+### Get leaderboard - List of top users from each country
 curl -i  http://localhost:8080/api/v1/leaderboard
-###Response
+### Response
 HTTP/1.1 200
 Content-Type: application/json
 Transfer-Encoding: chunked
