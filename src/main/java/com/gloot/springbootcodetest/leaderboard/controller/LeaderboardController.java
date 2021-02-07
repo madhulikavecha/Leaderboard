@@ -2,8 +2,8 @@ package com.gloot.springbootcodetest.leaderboard.controller;
 
 
 import com.gloot.springbootcodetest.leaderboard.dto.LeaderboardEntryDto;
-import com.gloot.springbootcodetest.leaderboard.model.LeaderboardEntryEntity;
 import com.gloot.springbootcodetest.leaderboard.exception.LeaderboardException;
+import com.gloot.springbootcodetest.leaderboard.model.LeaderboardEntryEntity;
 import com.gloot.springbootcodetest.leaderboard.service.LeaderboardService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -28,11 +28,11 @@ public class LeaderboardController {
      */
     @GetMapping
     public ResponseEntity<List<LeaderboardEntryDto>> getLeaderboard() {
-        try{
-            return (ResponseEntity<List<LeaderboardEntryDto>>) new ResponseEntity(service.getListOfTopLeaderboardEntriesAsDTO(),HttpStatus.OK);
+        try {
+            return (ResponseEntity<List<LeaderboardEntryDto>>) new ResponseEntity(service.getListOfTopLeaderboardEntriesAsDTO(), HttpStatus.OK);
 
-        }catch (LeaderboardException e){
-            return  new ResponseEntity(e.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND);
+        } catch (LeaderboardException e) {
+            return new ResponseEntity(e.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND);
         }
 
     }
@@ -60,11 +60,11 @@ public class LeaderboardController {
      */
     @GetMapping("/allusers")
     public ResponseEntity<List<LeaderboardEntryDto>> getAllUsers() {
-        try{
-            return (ResponseEntity<List<LeaderboardEntryDto>>) new ResponseEntity(service.getAllUsers(),HttpStatus.OK);
+        try {
+            return (ResponseEntity<List<LeaderboardEntryDto>>) new ResponseEntity(service.getAllUsers(), HttpStatus.OK);
 
-        }catch (LeaderboardException e){
-            return  new ResponseEntity(e.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND);
+        } catch (LeaderboardException e) {
+            return new ResponseEntity(e.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND);
         }
 
     }
@@ -76,13 +76,13 @@ public class LeaderboardController {
      * @return position of specific user specified to country.
      */
     @GetMapping("/position/{username}/{country}")
-    public Object getPositionOfUser(@PathVariable String username, @PathVariable String country)  {
-        try{
+    public Object getPositionOfUser(@PathVariable String username, @PathVariable String country) {
+        try {
             return service.getPositionOfUserSpecificLeaderboard(username, country);
-        }catch (LeaderboardException e){
-            return  new ResponseEntity(e.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND);
+        } catch (LeaderboardException e) {
+            return new ResponseEntity(e.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND);
         }
-      }
+    }
 
 
     /**
@@ -92,27 +92,28 @@ public class LeaderboardController {
      */
     @PostMapping("/updatescore")
     public ResponseEntity updateScore(@RequestBody LeaderboardEntryEntity entity) {
-        try{
-            String messageToUser= service.updateScore(entity);
+        try {
+            String messageToUser = service.updateScore(entity);
             return new ResponseEntity(messageToUser, new HttpHeaders(), HttpStatus.OK);
-        }catch (LeaderboardException e){
-            return  new ResponseEntity(e.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND);
+        } catch (LeaderboardException e) {
+            return new ResponseEntity(e.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND);
         }
-     }
+    }
 
 
     /**
      * HTTP Request handler at the /country/{country} endpoint.
+     * <p>
+     * * @return sorted List of user based on score  from country specified.
      *
-     ** @return sorted List of user based on score  from country specified.
      * @Pathvariable country specified by the user
      */
     @GetMapping("/country/{country}")
-    public ResponseEntity<List<LeaderboardEntryDto>> topUserScoreByCountry(@PathVariable String country){
-        try{
-          return (ResponseEntity<List<LeaderboardEntryDto>>) new ResponseEntity(service.getListOfAllUsersByCountry(country),HttpStatus.OK);
-        }catch (LeaderboardException e){
-            return  new ResponseEntity(e.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND);
+    public ResponseEntity<List<LeaderboardEntryDto>> topUserScoreByCountry(@PathVariable String country) {
+        try {
+            return (ResponseEntity<List<LeaderboardEntryDto>>) new ResponseEntity(service.getListOfAllUsersByCountry(country), HttpStatus.OK);
+        } catch (LeaderboardException e) {
+            return new ResponseEntity(e.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -123,13 +124,12 @@ public class LeaderboardController {
      * @Pathvariable username or nick can  be  specified by the user
      */
     @PostMapping("/delete")
-    public ResponseEntity deleteUser(@RequestBody LeaderboardEntryEntity entity){
-        try{
-            String messageToUser= service.deleteUser(entity);
+    public ResponseEntity deleteUser(@RequestBody LeaderboardEntryEntity entity) {
+        try {
+            String messageToUser = service.deleteUser(entity);
             return new ResponseEntity(messageToUser, new HttpHeaders(), HttpStatus.OK);
-        }
-        catch (LeaderboardException e){
-            return new ResponseEntity(e.getMessage(),new HttpHeaders(),HttpStatus.NOT_FOUND);
+        } catch (LeaderboardException e) {
+            return new ResponseEntity(e.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND);
         }
 
 

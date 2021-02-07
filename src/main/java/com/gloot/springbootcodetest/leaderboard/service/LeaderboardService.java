@@ -61,8 +61,8 @@ public class LeaderboardService {
      * Creates a new user with username given and creates nick - uniquq ID and save in database
      *
      * @param entity json representing LeaderboardEntryEntity
-     * @throws LeaderboardException if  username or country is less than 2 characters
      * @return A success/failure string with message
+     * @throws LeaderboardException if  username or country is less than 2 characters
      */
     public String createUser(LeaderboardEntryEntity entity) throws LeaderboardException {
 
@@ -93,8 +93,8 @@ public class LeaderboardService {
      * position of user in given country .Position can be searched based on username or nick
      *
      * @param (username or nick),country specified by user
-     * @throws LeaderboardException if  user is not available or user has multiple accounts and trying fetch position by username
      * @return position of given user from specified country
+     * @throws LeaderboardException if  user is not available or user has multiple accounts and trying fetch position by username
      */
     public String getPositionOfUserSpecificLeaderboard(String username, String country) throws LeaderboardException {
         String countryUpdated = country.toLowerCase();
@@ -112,9 +112,9 @@ public class LeaderboardService {
             msgToUser = "The position of user ( " + username + " ) in " + country + " leaderboard is   " + entryEntity.get().getPosition();
         } else {
             try {
-                    checkMultipleAccountsForUser(username);
-                    Optional<LeaderboardEntryDto> entryEntity = sortedList.stream().filter(i -> i.getUsername() == user.get(0).getUsername()).findAny();
-                    msgToUser = "The position of user ( " + username + " ) in " + country + " leaderboard is   " + entryEntity.get().getPosition();
+                checkMultipleAccountsForUser(username);
+                Optional<LeaderboardEntryDto> entryEntity = sortedList.stream().filter(i -> i.getUsername() == user.get(0).getUsername()).findAny();
+                msgToUser = "The position of user ( " + username + " ) in " + country + " leaderboard is   " + entryEntity.get().getPosition();
 
             } catch (LeaderboardException e) {
                 throw new LeaderboardException(e.getMessage());
@@ -127,8 +127,8 @@ public class LeaderboardService {
      * Update score of user based in username or nick
      *
      * @param entity json representing LeaderboardEntryEntity
-     * @throws LeaderboardException if  user is not available or user has multiple accounts and trying update score by username
      * @return updated score and success message to user
+     * @throws LeaderboardException if  user is not available or user has multiple accounts and trying update score by username
      */
     public String updateScore(LeaderboardEntryEntity entity) throws LeaderboardException {
         int score = entity.getScore();
@@ -164,9 +164,9 @@ public class LeaderboardService {
 
 
     /**
-     *  @param country specified by user
-     * @throws LeaderboardException if  country is not available
+     * @param country specified by user
      * @return a list of user(LeaderboardEntryEntity) containing top score user from each country
+     * @throws LeaderboardException if  country is not available
      */
     public List<LeaderboardEntryDto> getListOfAllUsersByCountry(String country) throws LeaderboardException {
         String countryUpdated = country.toLowerCase();
@@ -180,10 +180,8 @@ public class LeaderboardService {
     }
 
     /**
-     *
-     *  @throws LeaderboardException if  users are not available
-     *
      * @return a list of all available user(LeaderboardEntryEntity)   from all  countries in sorted order by score
+     * @throws LeaderboardException if  users are not available
      */
     public List<LeaderboardEntryDto> getAllUsers() throws LeaderboardException {
         List<LeaderboardEntryEntity> entityList = repository.findAll(Sort.by(Sort.Direction.DESC, "score"));
@@ -195,6 +193,7 @@ public class LeaderboardService {
 
     /**
      * update the list with rank
+     *
      * @return a list of LeaderboardEntryEntity
      */
     private LeaderboardEntryEntity[] updateRanks(LeaderboardEntryEntity[] entryEntityList) {
@@ -209,9 +208,10 @@ public class LeaderboardService {
 
     /**
      * check if nick is valid user
+     *
      * @param nickId unique nick of user
-      * @throws LeaderboardException if  user is not available  for nickid provided
-     * @return  LeaderboardEntryEntity of nick given
+     * @return LeaderboardEntryEntity of nick given
+     * @throws LeaderboardException if  user is not available  for nickid provided
      */
     private LeaderboardEntryEntity checkIsavailableNickaccount(String nickId) throws LeaderboardException {
         LeaderboardEntryEntity userWithUserId = repository.findLeaderboardEntryEntityByNick(nickId);
@@ -223,9 +223,10 @@ public class LeaderboardService {
 
     /**
      * check if username valid or having multiple accounts with same username
-     * @throws LeaderboardException if  user is not available or user has multiple accounts and trying fetch position by username
+     *
      * @param username of user
-     * @return  list of LeaderboardEntryEntity of username given
+     * @return list of LeaderboardEntryEntity of username given
+     * @throws LeaderboardException if  user is not available or user has multiple accounts and trying fetch position by username
      */
     private List<LeaderboardEntryEntity> checkMultipleAccountsForUser(String username) throws LeaderboardException {
         List<LeaderboardEntryEntity> userList = repository.findByUsername(username);
@@ -241,8 +242,8 @@ public class LeaderboardService {
      * Delete user based in username or nick
      *
      * @param entity json representing LeaderboardEntryEntity
-     * @throws LeaderboardException if  user is not available or user has multiple accounts and trying fetch position by username
      * @return success message to user if sucessfully deleted
+     * @throws LeaderboardException if  user is not available or user has multiple accounts and trying fetch position by username
      */
     public String deleteUser(LeaderboardEntryEntity entity) throws LeaderboardException {
         String username = entity.getUsername();

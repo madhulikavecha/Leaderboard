@@ -1,12 +1,13 @@
 package com.gloot.springbootcodetest.leaderboard.model;
 
-import javax.persistence.*;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GeneratorType;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "leaderboard")
@@ -15,20 +16,20 @@ import org.hibernate.annotations.GeneratorType;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LeaderboardEntryEntity {
-  //@Id
- // @GeneratedValue(strategy= GenerationType.IDENTITY)
-  private Integer pos ;
-  @Id
-  private String nick;
-  private String username;
-  private Integer score;
-  private String country;
+    //@Id
+    // @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Integer pos;
+    @Id
+    private String nick;
+    private String username;
+    private Integer score;
+    private String country;
 
 
-  public LeaderboardEntryEntity(String username,String country) {
-    this.username=username;
-    this.country=country;
-    this.score=0;
-    pos=1;
-  }
+    public LeaderboardEntryEntity(String username, String country) {
+        this.username = username;
+        this.country = country;
+        this.score = 0;
+        pos = 1;
+    }
 }

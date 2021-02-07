@@ -6,7 +6,6 @@ import com.gloot.springbootcodetest.leaderboard.exception.LeaderboardException;
 import com.gloot.springbootcodetest.leaderboard.model.LeaderboardEntryEntity;
 import com.gloot.springbootcodetest.leaderboard.repository.LeaderboardRepository;
 import com.gloot.springbootcodetest.leaderboard.service.LeaderboardService;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

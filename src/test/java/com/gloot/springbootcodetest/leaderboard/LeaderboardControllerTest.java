@@ -4,9 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gloot.springbootcodetest.SpringBootComponentTest;
 import com.gloot.springbootcodetest.leaderboard.model.LeaderboardEntryEntity;
 import com.gloot.springbootcodetest.leaderboard.repository.LeaderboardRepository;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -60,7 +58,7 @@ public class LeaderboardControllerTest extends SpringBootComponentTest {
                         new LeaderboardEntryEntity(2, "g-looter2", "g-looter-2", 90, "usa"));
         repository.saveAll(entities);
 
-        mockMvc.perform(get("/api/v1/leaderboard/USA"))
+        mockMvc.perform(get("/api/v1/leaderboard/country/USA"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0].nick", is(entities.get(0).getNick())))
                 .andExpect(jsonPath("$.[0].username", is(entities.get(0).getUsername())))
@@ -97,7 +95,7 @@ public class LeaderboardControllerTest extends SpringBootComponentTest {
      */
     @Test
     void createUserTest() throws Exception {
-       repository.deleteAll();
+        repository.deleteAll();
 
         LeaderboardEntryEntity entity = new LeaderboardEntryEntity();
         entity.setUsername("username1");
@@ -155,6 +153,42 @@ public class LeaderboardControllerTest extends SpringBootComponentTest {
         MvcResult result = mockMvc.perform(post("/api/v1/leaderboard/delete")
                 .contentType(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isOk()).andReturn();
         assertEquals("The user " + username + "  has been deleted", result.getResponse().getContentAsString());
+
+    }
+
+    @Test
+    void invalidUrl_returnsHttp404() throws Exception {
+        LeaderboardEntryEntity entity = new LeaderboardEntryEntity(1, "glo4us234", "username1", 100, "usa");
+        repository.saveAll(List.of(entity));
+        String username = "username1";
+
+        LeaderboardEntryEntity entityToUpadte = new LeaderboardEntryEntity();
+        entityToUpadte.setUsername("username1");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(entityToUpadte);
+
+        MvcResult result = mockMvc.perform(post("/api/v1/leaderboard/updateuser/wrongurl/badrequest")
+                .contentType(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isNotFound()).andReturn();
+        assertEquals("The URL you have reached is not in service at this time (404). ", result.getResponse().getContentAsString());
+
+    }
+
+
+    @Test
+    void invalidData_returnsHttp404() throws Exception {
+        LeaderboardEntryEntity entity = new LeaderboardEntryEntity(1, "glo4us234", "username1", 100, "usa");
+        repository.saveAll(List.of(entity));
+        String username = "username1";
+
+        LeaderboardEntryEntity entityToUpadte = new LeaderboardEntryEntity();
+        entityToUpadte.setUsername("username1");
+        entityToUpadte.setCountry("usa");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(entityToUpadte);
+
+        MvcResult result = mockMvc.perform(post("/api/v1/leaderboard/updatescore")
+                .contentType(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isInternalServerError()).andReturn();
+        assertEquals("Invalid HTTP request !! Please provide valid data!! ", result.getResponse().getContentAsString());
 
     }
 

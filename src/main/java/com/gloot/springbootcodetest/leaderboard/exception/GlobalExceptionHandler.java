@@ -1,28 +1,33 @@
 package com.gloot.springbootcodetest.leaderboard.exception;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
-@ControllerAdvice
+
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 
-   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler({Exception.class})
     public ResponseEntity<Object> handle(Exception e) {
 
-       // logger.error("error occurred {}", e);
-        return new ResponseEntity<>("Something happened: " , HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>("Invalid HTTP request !! Please provide valid data!! ", HttpStatus.INTERNAL_SERVER_ERROR);
 
-   }
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ResponseEntity<Object> noHandlerFoundException(
+            NoHandlerFoundException ex) {
+
+        return new ResponseEntity<>("The URL you have reached is not in service at this time (404). ", HttpStatus.NOT_FOUND);
+
+    }
 
 
 }
