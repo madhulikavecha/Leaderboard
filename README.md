@@ -87,7 +87,7 @@ please select valid country among [eu, sweden, usa]
 
 ### Get users from all the countries
 curl -i  http://localhost:8080/api/v1/leaderboard/allusers
-##Response
+### Response
 HTTP/1.1 200
 Content-Type: application/json
 Transfer-Encoding: chunked
@@ -100,27 +100,27 @@ Date: Sun, 07 Feb 2021 19:23:00 GMT
 name1","score":0,"country":"sweden"},{"position":9,"nick":"madhu5","username":"rohan","score":-1,"country":"usa"},{"position":10,"nick":"maEU4","username":"mania","score":-1,"country":"eu"}]
 
 
-## Create a new user :
+### Create a new user :
 curl -i -d "{"""username""":"""myusername1""","""country""":"""sweden"""}" -H "Content-Type:application/json"  http://localhost:8080/api/v1/leaderboard/createuser
-###Response
+### Response
 HTTP/1.1 201
 Content-Type: text/plain;charset=UTF-8
 Content-Length: 66
 
 New User is saved with userName, userId - myusername1, myu11sw4279
 
-##Update user score
+### Update user score :
 curl -i -d "{"""username""":"""tomas""","""score""":"""1000"""}" -H "Content-Type:application/json"  http://localhost:8080/api/v1/leaderboard/updatescore
-###Response
+### Response:
 HTTP/1.1 404
 Content-Type: text/plain;charset=UTF-8
 Content-Length: 112
 
 User Score is updated User , Score :  tomas ,1000
 
-###Update user profiles with multiple accounts having the same username
+### Update user profiles with multiple accounts having the same username:
 curl -i -d "{"""username""":"""myusername1""","""score""":"""1000"""}" -H "Content-Type:application/json"  http://localhost:8080/api/v1/leaderboard/updatescore
-###Response
+### Response
 HTTP/1.1 404
 Content-Type: text/plain;charset=UTF-8
 Content-Length: 112
@@ -128,18 +128,18 @@ Date: Sun, 07 Feb 2021 18:55:34 GMT
 
 There are several accounts created with this username. Please provide a unique userId for username - myusername1 
 
-####NEED TO PROVIDE NICK IN THIS CASE
+### NEED TO PROVIDE NICK IN THIS CASE:
 curl -i -d "{"""nick""":"""myu11sw4279""","""score""":"""1000"""}" -H "Content-Type:application/json"  http://localhost:8080/api/v1/leaderboard/updatescore
-###Response
+### Response
 HTTP/1.1 404
 Content-Type: text/plain;charset=UTF-8
 Content-Length: 112
 
 User Score is updated User , Score :  myu11sw4279 ,1000
 
-##Delete user 
+### Delete user 
 curl -i -d "{"""username""":"""tomas"""}" -H "Content-Type:application/json"  http://localhost:8080/api/v1/leaderboad/delete
-###Response
+### Response
 HTTP/1.1 200
 Content-Type: text/plain;charset=UTF-8
 Content-Length: 32
@@ -148,18 +148,18 @@ Date: Sun, 07 Feb 2021 19:10:43 GMT
 The user tomas  has been deleted
 
 
-###Delete user profiles with multiple accounts having the same username
+### Delete user profiles with multiple accounts having the same username
 curl -i -d "{"""username""":"""myusername1"""}" -H "Content-Type:application/json"  http://localhost:8080/api/v1/leaderboad/delete
-###Response
+### Response
 HTTP/1.1 404
 Content-Type: text/plain;charset=UTF-8
 Content-Length: 112
 Date: Sun, 07 Feb 2021 19:05:29 GMT
 
 There are several accounts created with this username. Please provide a unique userId for username - myusername1
-####NEED TO PROVIDE NICK IN THIS CASE
+### NEED TO PROVIDE NICK IN THIS CASE
 curl -i -d "{"""nick""":"""myu11sw4279"""}" -H "Content-Type:application/json"  http://localhost:8080/api/v1/leaderboard/updatescore
-###Response
+### Response
 HTTP/1.1 404
 Content-Type: text/plain;charset=UTF-8
 Content-Length: 112
@@ -168,7 +168,7 @@ The user myu11sw4279  has been deleted
 
 ### Get position of user based on country
 curl -i  http://localhost:8080/api/v1/leaderboard/position/eric/usa
-###Response
+### Response
 HTTP/1.1 200
 Content-Type: text/plain;charset=UTF-8
 Content-Length: 55
@@ -178,7 +178,7 @@ The position of user ( eric ) in usa leaderboard is   3
 
 ### Following is the case when the user is not available in specified country
 curl -i  http://localhost:8080/api/v1/leaderboard/position/username1/usa
-###Response
+### Response
 HTTP/1.1 404
 Content-Type: text/plain;charset=UTF-8
 Content-Length: 100
@@ -186,18 +186,18 @@ Date: Sun, 07 Feb 2021 19:26:02 GMT
 
 Please provide the valid username. 'username1'  is not found in our records.
 
-###Get position of the user profile with multiple accounts having the same username
+### Get position of the user profile with multiple accounts having the same username
 curl -i http://localhost:8080/api/v1/leaderboard/position/johan/usa
-###Response
+### Response
 HTTP/1.1 404
 Content-Type: text/plain;charset=UTF-8
 Content-Length: 106
 Date: Sun, 07 Feb 2021 19:29:52 GMT
 
 There are several accounts created with this username. Please provide a unique userId for username - johan
-####NEED TO PROVIDE NICK IN THIS CASE
+### NEED TO PROVIDE NICK IN THIS CASE
 curl -i http://localhost:8080/api/v1/leaderboard/position/joh10us37531/usa
-###Response
+### Response
 HTTP/1.1 200
 Content-Type: text/plain;charset=UTF-8
 Content-Length: 63
