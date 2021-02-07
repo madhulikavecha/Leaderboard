@@ -41,8 +41,6 @@ public class LeaderboardController {
      * HTTP Request handler at the /createUser endpoint. Only accepts POST requests
      *
      * @return success message if user is created. A new user is created and unique Nick is also generated..
-     * @Pathvariable username specified by the user
-     * @Pathvariable country specified by the user
      */
     @PostMapping("/createuser")
     public ResponseEntity createUser(@RequestBody LeaderboardEntryEntity entity) throws LeaderboardException {
@@ -76,8 +74,6 @@ public class LeaderboardController {
      * HTTP Request handler at the /position/{username}/{country} endpoint.
      *
      * @return position of specific user specified to country.
-     * @Pathvariable username or nick can be specified by the user
-     * @Pathvariable country specified by the user
      */
     @GetMapping("/position/{username}/{country}")
     public Object getPositionOfUser(@PathVariable String username, @PathVariable String country)  {
@@ -93,8 +89,6 @@ public class LeaderboardController {
      * HTTP Request handler at the /userscore endpoint.Only accepts POST requests
      *
      * @return success message with new score  of user.
-     * @Pathvariable username or nick can be specified by the user
-     * @Pathvariable country specified by the user
      */
     @PostMapping("/updatescore")
     public ResponseEntity updateScore(@RequestBody LeaderboardEntryEntity entity) {
@@ -108,12 +102,12 @@ public class LeaderboardController {
 
 
     /**
-     * HTTP Request handler at the /{country} endpoint.
+     * HTTP Request handler at the /country/{country} endpoint.
      *
      ** @return sorted List of user based on score  from country specified.
      * @Pathvariable country specified by the user
      */
-    @GetMapping("/{country}")
+    @GetMapping("/country/{country}")
     public ResponseEntity<List<LeaderboardEntryDto>> topUserScoreByCountry(@PathVariable String country){
         try{
           return (ResponseEntity<List<LeaderboardEntryDto>>) new ResponseEntity(service.getListOfAllUsersByCountry(country),HttpStatus.OK);

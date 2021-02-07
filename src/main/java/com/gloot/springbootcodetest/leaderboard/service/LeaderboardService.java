@@ -142,7 +142,7 @@ public class LeaderboardService {
                 newscore = userWithUserId.getScore() + score;
                 userWithUserId.setScore(newscore);
                 repository.save(userWithUserId);
-                msgToUser = "User Score is updated User , Score :\" + username + \"," + newscore;
+                msgToUser = "User Score is updated User nickId, Score :" + nickId + "," + newscore;
             } catch (LeaderboardException e) {
                 throw new LeaderboardException(e.getMessage());
             }

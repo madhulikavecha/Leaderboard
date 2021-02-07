@@ -6,6 +6,7 @@ import com.gloot.springbootcodetest.leaderboard.exception.LeaderboardException;
 import com.gloot.springbootcodetest.leaderboard.model.LeaderboardEntryEntity;
 import com.gloot.springbootcodetest.leaderboard.repository.LeaderboardRepository;
 import com.gloot.springbootcodetest.leaderboard.service.LeaderboardService;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,6 +20,7 @@ public class LeaderboardServiceTest extends SpringBootComponentTest {
     LeaderboardRepository repository;
     @Autowired
     LeaderboardService service;
+
 
     /**
      * test to get list of LeaderboardEntryEntity  containing top score user from each country

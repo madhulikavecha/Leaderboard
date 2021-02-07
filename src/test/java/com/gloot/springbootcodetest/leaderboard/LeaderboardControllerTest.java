@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gloot.springbootcodetest.SpringBootComponentTest;
 import com.gloot.springbootcodetest.leaderboard.model.LeaderboardEntryEntity;
 import com.gloot.springbootcodetest.leaderboard.repository.LeaderboardRepository;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -46,7 +48,7 @@ public class LeaderboardControllerTest extends SpringBootComponentTest {
     }
 
     /**
-     * test to get list of LeaderboardEntryEntity  user from country specified sorted by score - "/api/v1/leaderboard/{anycountry}"
+     * test to get list of LeaderboardEntryEntity  user from country specified sorted by score - "/api/v1/leaderboard/country/{anycountry}"
      *
      * @throws Exception
      */
@@ -95,7 +97,7 @@ public class LeaderboardControllerTest extends SpringBootComponentTest {
      */
     @Test
     void createUserTest() throws Exception {
-        repository.deleteAll();
+       repository.deleteAll();
 
         LeaderboardEntryEntity entity = new LeaderboardEntryEntity();
         entity.setUsername("username1");
