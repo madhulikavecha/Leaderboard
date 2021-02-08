@@ -108,7 +108,7 @@ public class LeaderboardService {
         }
         String msgToUser = null;
         if (userWithUserId != null && userWithUserId.getCountry().equals(countryUpdated)) {
-            Optional<LeaderboardEntryDto> entryEntity = sortedList.stream().filter(i -> i.getUsername() == userWithUserId.getUsername()).findAny();
+            Optional<LeaderboardEntryDto> entryEntity = sortedList.stream().filter(i -> i.getNick() == userWithUserId.getNick()).findAny();
             msgToUser = "The position of user ( " + username + " ) in " + country + " leaderboard is   " + entryEntity.get().getPosition();
         } else {
             try {

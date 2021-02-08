@@ -17,7 +17,7 @@ public class LeaderboardRepositoryTest extends SpringBootComponentTest {
 
     @Test
     void saveAndRetrieve() {
-        LeaderboardEntryEntity entity = new LeaderboardEntryEntity(1, "g-looter", "g-looter", 100, "USA");
+        LeaderboardEntryEntity entity = new LeaderboardEntryEntity(1, "g-lo2us8594r", "g-looter", 100, "USA");
         repository.saveAll(List.of(entity));
         LeaderboardEntryEntity fromRepository = repository.findByNick(entity.getNick());
         assertThat(fromRepository, is(entity));

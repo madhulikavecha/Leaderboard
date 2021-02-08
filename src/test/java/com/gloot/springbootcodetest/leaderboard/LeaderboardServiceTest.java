@@ -30,9 +30,9 @@ public class LeaderboardServiceTest extends SpringBootComponentTest {
     void getLeaderboard() throws LeaderboardException {
         repository.deleteAll();
         List<LeaderboardEntryEntity> entities = List
-                .of(new LeaderboardEntryEntity(1, "g-looter", "g-looter-1", 100, "usa"),
-                        new LeaderboardEntryEntity(1, "g-looter2", "g-looter-1", 100, "usa"),
-                        new LeaderboardEntryEntity(1, "g-looter3", "g-looter-1", -1, "usa"),
+                .of(new LeaderboardEntryEntity(1, "g-lous555", "g-looter-1", 100, "usa"),
+                        new LeaderboardEntryEntity(1, "g-lo00us565", "g-looter-1", 100, "usa"),
+                        new LeaderboardEntryEntity(1, "g-lo1us5658", "g-looter-1", -1, "usa"),
                         new LeaderboardEntryEntity(1, "use1sw32e", "g-looter-1", 999, "sweden"),
                         new LeaderboardEntryEntity(1, "g-use3swe12", "g-looter-1", 100, "sweden"),
                         new LeaderboardEntryEntity(1, "us32eu234", "europeuser1", 100, "eu"),
@@ -89,8 +89,8 @@ public class LeaderboardServiceTest extends SpringBootComponentTest {
         repository.deleteAll();
         List<LeaderboardEntryEntity> entities = List
                 .of(new LeaderboardEntryEntity(1, "g-looter", "g-looter-1", 100, "usa"),
-                        new LeaderboardEntryEntity(1, "g-looter2", "g-looter-1", 100, "usa"),
-                        new LeaderboardEntryEntity(1, "g-looter3", "g-looter-1", -1, "usa"),
+                        new LeaderboardEntryEntity(1, "g-lo1us998", "g-looter-1", 100, "usa"),
+                        new LeaderboardEntryEntity(1, "g-lo11us797", "g-looter-1", -1, "usa"),
                         new LeaderboardEntryEntity(1, "use1sw32e", "g-looter-1", 999, "sweden"),
                         new LeaderboardEntryEntity(1, "g-use3swe12", "g-looter-1", 100, "sweden"),
                         new LeaderboardEntryEntity(1, "us32eu234", "europeuser1", 100, "eu"),

@@ -34,7 +34,7 @@ public class LeaderboardControllerTest extends SpringBootComponentTest {
     @Test
     void getLeaderboardTest() throws Exception {
         repository.deleteAll();
-        LeaderboardEntryEntity entity = new LeaderboardEntryEntity(1, "g-looter", "g-looter", 100, "usa");
+        LeaderboardEntryEntity entity = new LeaderboardEntryEntity(1, "g-lo7us678", "g-looter", 100, "usa");
         repository.saveAll(List.of(entity));
 
         mockMvc.perform(get("/api/v1/leaderboard"))
@@ -54,8 +54,8 @@ public class LeaderboardControllerTest extends SpringBootComponentTest {
     void getLeaderboardByCountryTest() throws Exception {
         repository.deleteAll();
         List<LeaderboardEntryEntity> entities = List
-                .of(new LeaderboardEntryEntity(1, "g-looter", "g-looter-1", 100, "usa"),
-                        new LeaderboardEntryEntity(2, "g-looter2", "g-looter-2", 90, "usa"));
+                .of(new LeaderboardEntryEntity(1, "g-lo9uus2322", "g-looter-1", 100, "usa"),
+                        new LeaderboardEntryEntity(2, "g-lo0ua55", "g-looter-2", 90, "usa"));
         repository.saveAll(entities);
 
         mockMvc.perform(get("/api/v1/leaderboard/country/USA"))
@@ -76,15 +76,15 @@ public class LeaderboardControllerTest extends SpringBootComponentTest {
     void getPositionOfUserBasedOnLeaderboardTest() throws Exception {
         repository.deleteAll();
         List<LeaderboardEntryEntity> entities = List
-                .of(new LeaderboardEntryEntity(1, "g-looter", "g-looterxyz", 100, "usa"),
-                        new LeaderboardEntryEntity(2, "g-looter2", "g-looter-1", 100, "usa"),
-                        new LeaderboardEntryEntity(1, "g-looter3", "g-looter-1", 100, "eu"),
-                        new LeaderboardEntryEntity(1, "g-looter4", "g-looter-1", 90, "eu"));
+                .of(new LeaderboardEntryEntity(1, "g-lo2us855", "g-looter", 100, "usa"),
+                        new LeaderboardEntryEntity(1, "g-lo3us234", "g-looter", 100, "usa"),
+                        new LeaderboardEntryEntity(1, "g-l4us2654", "g-looter", 100, "eu"),
+                        new LeaderboardEntryEntity(1, "g-loo7us948", "g-looter", 90, "eu"));
         repository.saveAll(entities);
-        MvcResult position = mockMvc.perform(get("/api/v1/leaderboard/position/g-looter2/usa"))
+        MvcResult position = mockMvc.perform(get("/api/v1/leaderboard/position/g-lo3us234/usa"))
                 .andExpect(status().isOk())
                 .andReturn();
-        assertEquals("The position of user ( g-looter2 ) in usa leaderboard is   2", position.getResponse().getContentAsString());
+        assertEquals("The position of user ( g-lo3us234 ) in usa leaderboard is   2", position.getResponse().getContentAsString());
 
     }
 
@@ -157,7 +157,7 @@ public class LeaderboardControllerTest extends SpringBootComponentTest {
     }
 
     @Test
-    void invalidUrl_returnsInternalServeError() throws Exception {
+    void invalidUrl_returnsHttp404() throws Exception {
         LeaderboardEntryEntity entity = new LeaderboardEntryEntity(1, "glo4us234", "username1", 100, "usa");
         repository.saveAll(List.of(entity));
         String username = "username1";
@@ -175,7 +175,7 @@ public class LeaderboardControllerTest extends SpringBootComponentTest {
 
 
     @Test
-    void invalidData_returnsHttp404() throws Exception {
+    void invalidData_returnsInternalServeError() throws Exception {
         LeaderboardEntryEntity entity = new LeaderboardEntryEntity(1, "glo4us234", "username1", 100, "usa");
         repository.saveAll(List.of(entity));
         String username = "username1";
